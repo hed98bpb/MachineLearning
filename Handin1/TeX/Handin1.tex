@@ -1,0 +1,71 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{breqn}
+\usepackage{amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+\usepackage{graphicx}
+\usepackage{breqn}
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus Universitet, Science, Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Machine Learning - Handin 1 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175 \and Marie Louisa T. Berthelsen - 201303610 \and Nanna Engell Rønde Andersen - 201205671} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle
+
+In your report, you should shortly explain your algorithms and the choices you have made. You should include a plot of some of the digits that your classifier makes mistakes on -- and discuss why that may be. \\ \\
+To show the performance of your gradient descent implementation include a plot of the cost function as a function of the number of steps taken. You should compare the running time and the convergence/output quality of mini-batch and full-batch gradient descent. \\ \\
+You should provide a figure that shows the parameter vectors for the case of classifying 2s versus 7s, and for the 10 all vs.~one classifiers. Furthermore, your report should include results for the pairwise computations (at least two vs seven) as well as the results for the full classifier on the AU data set. \\ \\
+
+Furthermore you must answer the following theoretical questions (although the bonus question is optional). \\ \\
+\begin{itemize}
+\item Sanity Check: If we randomly permute the pixels in each image and train the classifier, the classifier will be just as good, given we permutate all later given images the same way as the training data was permutated. 
+\\ \\
+\item Linear Separable: If the data is linearly separable, what happens to weights when we implement logistic regression with gradient descent? That is, how do the weights that minimize the negative log likelihood look like? \\ \\
+Assume that we have full precision (that is, ignore floating point errors). We can run gradient descent on the data set for as long as we want (suppose God helps you). Now what will happen with the weights in the limit? \\ \\
+Do they converge to some fixed number (fluctuate around it) or do they keep increasing in magnitude (absolute value)? Give a short explanation for your answer. What happens if we add regularization? \\ \\
+
+If the data is linearly separable the gradient will converge to infinity, because the difference between the two classes becomes bigger and bigger. That is why it's a good idea to add a regularization parameter, since it will penalize the weight vector from getting too big. 
+
+\item Bonus Question: Convexity of negative log likelihood. Show that the negative log likelihood function for logistic regression is convex. Is it still convex if we add regularization?
+\end{itemize}
+
+
+
+\end{document}
