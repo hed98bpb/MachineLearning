@@ -4,15 +4,12 @@
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
-\usepackage{breqn}
-\usepackage{amsfonts,amsthm} % Math packages
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
 
 \usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
 
 \usepackage{sectsty} % Allows customizing section commands
 \allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
-\usepackage{graphicx}
-\usepackage{breqn}
 
 \usepackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
@@ -24,8 +21,16 @@
 \renewcommand{\footrulewidth}{0pt} % Remove footer underlines
 \setlength{\headheight}{13.6pt} % Customize the height of the header
 
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
@@ -46,26 +51,53 @@
 \date{\normalsize\today} % Today's date or a custom date
 
 \begin{document}
-
-\maketitle
-
-In your report, you should shortly explain your algorithms and the choices you have made. You should include a plot of some of the digits that your classifier makes mistakes on -- and discuss why that may be. \\ \\
-To show the performance of your gradient descent implementation include a plot of the cost function as a function of the number of steps taken. You should compare the running time and the convergence/output quality of mini-batch and full-batch gradient descent. \\ \\
-You should provide a figure that shows the parameter vectors for the case of classifying 2s versus 7s, and for the 10 all vs.~one classifiers. Furthermore, your report should include results for the pairwise computations (at least two vs seven) as well as the results for the full classifier on the AU data set. \\ \\
-
-Furthermore you must answer the following theoretical questions (although the bonus question is optional). \\ \\
-\begin{itemize}
-\item Sanity Check: If we randomly permute the pixels in each image and train the classifier, the classifier will be just as good, given we permutate all later given images the same way as the training data was permutated. 
-\\ \\
-\item Linear Separable: If the data is linearly separable, what happens to weights when we implement logistic regression with gradient descent? That is, how do the weights that minimize the negative log likelihood look like? \\ \\
-Assume that we have full precision (that is, ignore floating point errors). We can run gradient descent on the data set for as long as we want (suppose God helps you). Now what will happen with the weights in the limit? \\ \\
-Do they converge to some fixed number (fluctuate around it) or do they keep increasing in magnitude (absolute value)? Give a short explanation for your answer. What happens if we add regularization? \\ \\
-
-If the data is linearly separable the gradient will converge to infinity, because the difference between the two classes becomes bigger and bigger. That is why it's a good idea to add a regularization parameter, since it will penalize the weight vector from getting too big. 
-
-\item Bonus Question: Convexity of negative log likelihood. Show that the negative log likelihood function for logistic regression is convex. Is it still convex if we add regularization?
-\end{itemize}
-
-
-
+	
+	\maketitle
+	
+	\section*{Introduction}
+	In this report we will discuss our implementation of a logistic regression algorithm, which is used for optical character recognition of handwritten numbers 0 through 9. We will outline our implementation choices, and briefly discuss some reflective questions about the algorithm.
+	
+	\section*{Implementation of the algorithm}
+	
+	In your report, you should shortly explain your algorithms and the choices you have made. You should include a plot of some of the digits that your classifier makes mistakes on -- and discuss why that may be. \\ \\
+	
+	We implemented a batch gradient descent function, which updates our weight vector $w$ by.
+	\begin{equation}
+		w:= w - \eta\cdot \dfrac{gradient}{n}
+	\end{equation}
+	where $\eta$ is a constant which states how "big" a step we take down the convex in our descent, and $n$ denotes the number of times we update our $w$ vector. Our gradient vector is calcuated as
+	\begin{equation}
+		gradient:= -X^\intercal(Y-\sigma(X\times w))
+	\end{equation}
+	To make sure our gradient descent stops when it has reached the (approximated) buttom or after n steps with length $\eta$, on the function, we check make sure our cost function always is descending. We defined our cost function as
+	\begin{equation*}
+		cost := \dfrac{NLL}{n} = \dfrac{- \sum_{i=1}^n y_i \ln(\sigma(w^\intercal x_i)) + (1-y_i) \ln(1-\sigma(w^\intercal x_i))}{n}
+	\end{equation*}
+	This also makes sure, our $\eta$ isn't so big, that we start ascending on the function. \\ \\
+	When running the main function we train the dataset from auTrain.npz and get $w$ by calling batch{\_}grad{\_}descent or mini{\_}batch{\_}grad{\_}descent on the datapoints - the matrix X, and the target values - the vector y. The difference between the function is that in the mini-batch we divide our dataset into smaller batches containing points from the dataset chosen randomly. In both functions we call log{\_}cost to find the gradient and value of the cost. In log{\_}cost we calculate sigma{\_}w{\_}X. If sigma{\_}w{\_}X is to close to 0 or equals 1 we get problems because we then will take $\log$(sigma{\_}w{\_}X) or $\log$(1 - sigma{\_}w{\_}X) which equals infinity. Therefore if that's the case for sigma{\_}w{\_}X we then subtract or add a very small number so this won't happen.
+	\\\\
+	After finding w we then preceed to test it on the test-data from auTest.npz. First we calculate $\sigma(w^\intercal x)$ which for each point gives the properbility for wether the point is in class 1, or not. If the probability is $>$ 0,5 then the point is set to be in class 1. Afterwards we then compare with the target values from the given test-data-set.
+	
+	\section*{Performance}
+	To show the performance of your gradient descent implementation include a plot of the cost function as a function of the number of steps taken. You should compare the running time and the convergence/output quality of mini-batch and full-batch gradient descent. \\ \\
+	
+	You should provide a figure that shows the parameter vectors for the case of classifying 2s versus 7s, and for the 10 all vs.~one classifiers. Furthermore, your report should include results for the pairwise computations (at least two vs seven) as well as the results for the full classifier on the AU data set. \\ \\
+	\section*{Theorerical questions}
+	\begin{itemize}
+		\item Sanity Check: If we randomly permute the pixels in each image and train the classifier, the classifier will be just as good, given we permutate all later given images the same way as the training data was permutated. 
+		\\ \\
+		\item Linear Separable: If the data is linearly separable, what happens to weights when we implement logistic regression with gradient descent? That is, how do the weights that minimize the negative log likelihood look like? \\ \\
+		Assume that we have full precision (that is, ignore floating point errors). We can run gradient descent on the data set for as long as we want (suppose God helps you). Now what will happen with the weights in the limit? \\ \\
+		Do they converge to some fixed number (fluctuate around it) or do they keep increasing in magnitude (absolute value)? Give a short explanation for your answer. What happens if we add regularization? \\ \\
+		
+		If the data is linearly separable the gradient will converge to infinity, because the difference between the two classes becomes bigger and bigger. That is why it's a good idea to add a regularization parameter, since it will penalize the weight vector from getting too big. 
+		\\
+		The weigth will converge to infinity or minus infinity depending on wether it is in the class in question or not.
+		\\
+		
+		\item Bonus Question: Convexity of negative log likelihood. Show that the negative log likelihood function for logistic regression is convex. Is it still convex if we add regularization?
+	\end{itemize}
+	
+	
+	
 \end{document}
