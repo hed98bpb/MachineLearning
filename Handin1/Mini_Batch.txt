@@ -1,0 +1,29 @@
+def mini_batch_grad_descent(X, y, w=None, reg=0, batchsize=16, epochs=10):
+    """
+    Run Mini-Batch Gradient Descent on data X,y to minimize the NLL for logistic regression on data X,y
+    The input defines mini-batch size and the number of passess through the data set (epochs)
+
+    Args:
+        X: A 2D numpy array of data points stored row-wise (n x d)
+        y: A 1D numpy array of target values (n x 1)
+        w: A 1D numpy array of weights (d x 1)
+        reg: Optional regularization parameter
+        batchsize: Number of data points to use in each batch
+        epochs: Number of times to go over all data points
+    Returns:
+        Learned weight vector (d x 1)
+    """
+    if w is None:
+        w = np.zeros(X.shape[1])
+    n = X.shape[0]
+
+    nbOfRows = math.ceil(n / batchsize)
+
+    for i in range(batchsize):
+        subset = np.random.choice([False, True], len(X), p=[1 - 1 / batchsize, 1 / batchsize])
+        new_X = X[subset]
+        new_y = y[subset]
+        # we manually change the epochs-size in the batch-grad-descent right now - TODO fix this.
+        w = np.add(w.reshape(-1, 1), batch_grad_descent(new_X, new_y))
+
+    return w / batchsize
