@@ -6,9 +6,9 @@ images, labels = get_data('Data/auTrain.npz')
 images_test, labels_test = get_data('Data/auTest.npz')
 
 for i in range(10):
-    print('C:', 0.1*i)
+    print('C:', 0.1*(i+1))
 
-    clf = svm.SVC(kernel='linear',C=(0.1*i))
+    clf = svm.SVC(kernel='linear',C=(0.1*(i+1)))
     clf.fit(images, labels)
 
     in_sample_accuracy = (clf.predict(images)==labels).mean()
