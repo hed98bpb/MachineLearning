@@ -1,20 +1,41 @@
 from sklearn import svm
+from sklearn.metrics import classification_report
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
 
 from Handin2.util import get_data
 
 images, labels = get_data('Data/auTrain.npz')
 images_test, labels_test = get_data('Data/auTest.npz')
 
-for i in range(1):
-    c = 3
-    d = 2
-    print('C=%s and d=%s' % (c,d))
+X_train, X_test, y_train, y_test = train_test_split(
+    images, labels, test_size=0.5, random_state=0)
 
-    clf = svm.SVC(kernel='poly',C=c, degree=d)
+
+param_grid = [{'C': [300, 400, 500, 600], 'degree': [2, 3], 'kernel': ['poly']},]
+
+scores = ['precision', 'recall']
+for score in scores:
+    print("# Tuning hyper-parameters for %s" % score)
+
+    clf = GridSearchCV(svm.SVC(), param_grid, cv=5, scoring='%s_macro' % score)
     clf.fit(images, labels)
 
-    in_sample_accuracy = (clf.predict(images)==labels).mean()
-    print('In sample Accuracy {:.2%}, In Sample Error {:.4f} '.format(in_sample_accuracy,1-in_sample_accuracy))
+    print("Best parameters set found on development set:")
+    print(clf.best_params_)
+    print()
+    print("Grid scores on development set:")
+    means = clf.cv_results_['mean_test_score']
+    stds = clf.cv_results_['std_test_score']
+    for mean, std, params in zip(means, stds, clf.cv_results_['params']):
+        print("%0.3f (+/-%0.03f) for %r"
+              % (mean, std * 2, params))
+    print()
 
-    out_of_sample_accuracy = (clf.predict(images_test)==labels_test).mean()
-    print('Out of sample Accuracy {:.2%}, In Sample Error {:.4f}'.format(out_of_sample_accuracy,1-out_of_sample_accuracy))
+    print("Detailed classification report:")
+    print("The model is trained on the full development set.")
+    print("The scores are computed on the full evaluation set.")
+    print()
+    y_true, y_pred = labels_test, clf.predict(images_test)
+    print(classification_report(y_true, y_pred))
+    print()
