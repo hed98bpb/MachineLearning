@@ -7,19 +7,18 @@ from Handin2.util import get_data
 
 images, labels = get_data('Data/auTrain.npz')
 images_test, labels_test = get_data('Data/auTest.npz')
-X_train, X_test, y_train, y_test = train_test_split(
-    images_test, labels_test, test_size=0.5, random_state=0)
 
 
-param_grid = [{'C': [0.4, 1, 10, 100, 1000], 'gamma': [0.01, 0.001, 0.0001], 'kernel': ['rbf']},]
+
+param_grid = [{'C': [0.4, 1, 10, 100], 'gamma': [0.01], 'kernel': ['rbf']},]
 
 scores = ['precision', 'recall']
 
 for score in scores:
     print("# Tuning hyper-parameters for %s" % score)
 
-    clf = GridSearchCV(svm.SVC(), param_grid, cv=2, scoring='%s_macro' % score)
-    clf.fit(X_train, y_train)
+    clf = GridSearchCV(svm.SVC(), param_grid, cv=3, scoring='%s_macro' % score)
+    clf.fit(images, labels)
 
     print("Best parameters set found on development set:")
     print(clf.best_params_)
@@ -36,6 +35,6 @@ for score in scores:
     print("The model is trained on the full development set.")
     print("The scores are computed on the full evaluation set.")
     print()
-    y_true, y_pred = y_test, clf.predict(X_test)
+    y_true, y_pred = labels_test, clf.predict(images_test)
     print(classification_report(y_true, y_pred))
     print()

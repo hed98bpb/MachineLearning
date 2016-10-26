@@ -8,17 +8,15 @@ from Handin2.util import get_data
 images, labels = get_data('Data/auTrain.npz')
 images_test, labels_test = get_data('Data/auTest.npz')
 
-X_train, X_test, y_train, y_test = train_test_split(
-    images, labels, test_size=0.5, random_state=0)
 
 
-param_grid = [{'C': [300, 400, 500, 600], 'degree': [2, 3], 'kernel': ['poly']},]
+param_grid = [{'C': [1000, 2000], 'degree': [2, 4], 'kernel': ['poly']},]
 
 scores = ['precision', 'recall']
 for score in scores:
     print("# Tuning hyper-parameters for %s" % score)
 
-    clf = GridSearchCV(svm.SVC(), param_grid, cv=5, scoring='%s_macro' % score)
+    clf = GridSearchCV(svm.SVC(), param_grid, cv=3, scoring='%s_macro' % score)
     clf.fit(images, labels)
 
     print("Best parameters set found on development set:")
