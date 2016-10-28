@@ -16,7 +16,7 @@ scores = ['precision', 'recall']
 for score in scores:
     print("# Tuning hyper-parameters for %s" % score)
 
-    clf = GridSearchCV(svm.SVC(), param_grid, cv=3, scoring='%s_macro' % score)
+    clf = GridSearchCV(svm.SVC(), param_grid, cv=5, scoring='%s_macro' % score)
     clf.fit(images, labels)
 
     print("Best parameters set found on development set:")
