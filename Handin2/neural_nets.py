@@ -1,9 +1,7 @@
-from Handin2.util import get_data
-from Handin2.helper_function import plot_perf
+from Handin2.util import get_data_nn
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
-from tensorflow.examples.tutorials.mnist import input_data
+import math as math
 
 """
 To implement this we have used the guide for building a softmax regression model first as in handin 1
@@ -21,7 +19,7 @@ def main():
     """
     Densely connected layer
     """
-    hidden_size = 300
+    hidden_size = 1000
 
     W_fc1 = weight_variable([28*28, hidden_size])
     b_fc1 = bias_variable([hidden_size])
@@ -46,9 +44,9 @@ def main():
     """
     Testing and evaluation
     """
-    learning_rate = 0.001
-    batch_size = 25  # usually between 10 and 30
-    nb_of_epoches = 30
+    learning_rate = 0.0001
+    batch_size = 30  # usually between 10 and 30
+    nb_of_epoches = 20
     reg_rate = 0.0001
 
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
@@ -63,33 +61,44 @@ def main():
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
     # Getting the data. images.shape = (10380, 784) labels.shape = (10380,)
-    images, labels = get_data('Data/auTrain.npz')
-    images_test, labels_test = get_data('Data/auTest.npz')
+    images, labels = get_data_nn('Data/auTrain.npz')
+    images_test, labels_test = get_data_nn('Data/auTest.npz')
 
     nb_of_images = images.shape[0]
+    validation_size = math.ceil(nb_of_images/10)
 
 
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
-        for i in range(nb_of_epoches): #antal epoker
-            perm = np.random.permutation(nb_of_images) #shufling the input
-            images = images[perm]
-            labels = labels[perm]
-            for j in range(0, nb_of_images, batch_size):
-                start = j
-                end = min(start + batch_size, nb_of_images)
 
-                img = images[start : end]
-                lab = labels[start : end]
+        images_training = images[validation_size : nb_of_images]
+        labels_training = labels[validation_size : nb_of_images]
+
+        images_validation = images[0 : validation_size]
+        labels_validation = labels[0 : validation_size]
+
+        for i in range(nb_of_epoches): #antal epoker
+            size_of_training = nb_of_images - validation_size
+            perm = np.random.permutation(size_of_training) #shufling the input
+            images_training = images_training[perm]
+            labels_training = labels_training[perm]
+            for j in range(0, size_of_training, batch_size):
+                start = j
+                end = min(start + batch_size, size_of_training)
+
+                img = images_training[start : end]
+                lab = labels_training[start : end]
 
                 if j == 0:
-                    train_accuracy = accuracy.eval(feed_dict={
-                        x: img, y_: lab, keep_prob: 1.0})
+                    train_accuracy = accuracy.eval(feed_dict={x: img, y_: lab, keep_prob: 1.0})
                     print("step %d, training accuracy %g" % (i, train_accuracy))
                 train_step.run(feed_dict={x: img, y_: lab, keep_prob: 0.5})
 
-        print("test accuracy %g" % accuracy.eval(feed_dict={
-                x: images_test, y_: labels_test, keep_prob: 1.0}))
+        in_sample_acc = sess.run(accuracy, feed_dict={x: images_validation, y_: labels_validation, keep_prob: 1.0})
+        out_of_sample_acc = sess.run(accuracy, feed_dict={x: images_test, y_: labels_test, keep_prob: 1.0})
+        print('in sample accuracy:', in_sample_acc)
+        print('out of sample accuracy:', out_of_sample_acc)
+
 
 # initialising weights
 def weight_variable(shape):
