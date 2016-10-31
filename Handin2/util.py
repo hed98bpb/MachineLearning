@@ -6,4 +6,10 @@ def get_data(file):
     images = train_file['digits']
     labels = train_file['labels']
 
-    return images, labels
+
+    n = images.shape[0]
+    Y = np.zeros((n, 10))  # Y.shape = n x K
+    for i in range(n):
+        Y[i][labels[i]] = 1
+
+    return images, Y
