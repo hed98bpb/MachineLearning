@@ -127,11 +127,11 @@ def main():
                                 # print('out of sample accuracy:', out_of_sample_acc)
                                 mean_of_test_acc.append(out_of_sample_acc)
 
-                        print("Batch", best_batch_size)
-                        print("Hidden size", best_hidden_size)
-                        print("Learning rate", best_learning_rate)
-                        print("Nb of epoches", best_nb_of_epoches)
-                        print("Reg rate", best_reg_rate)
+                        print("Batch", batch_size)
+                        print("Hidden size", hidden_size)
+                        print("Learning rate", learning_rate)
+                        print("Nb of epoches", nb_of_epoches)
+                        print("Reg rate", reg_rate)
 
                         print('\nMEANS of %d runs: ' %(cv))
                         print('validation accuracy: ', np.mean(mean_of_val_acc))
