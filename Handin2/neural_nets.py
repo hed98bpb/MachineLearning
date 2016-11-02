@@ -19,7 +19,7 @@ def main():
     """
     Densely connected layer
     """
-    hidden_size = 1000
+    hidden_size = 600
 
     W_fc1 = weight_variable([28*28, hidden_size])
     b_fc1 = bias_variable([hidden_size])
@@ -44,9 +44,9 @@ def main():
     """
     Testing and evaluation
     """
-    learning_rate = 0.0001
-    batch_size = 30  # usually between 10 and 30
-    nb_of_epoches = 20
+    learning_rate = 0.001
+    batch_size = 25  # usually between 10 and 30
+    nb_of_epoches = 10
     reg_rate = 0.0001
 
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
@@ -65,39 +65,54 @@ def main():
     images_test, labels_test = get_data_nn('Data/auTest.npz')
 
     nb_of_images = images.shape[0]
-    validation_size = math.ceil(nb_of_images/10)
+    cv = 3
+    validation_size = math.floor(nb_of_images/10)
+
+    mean_of_acc = []
+
+    for k in range(cv):  # for k-fold cross validation where we can independently choose how large each test set is and how many trials you average over
+        perm1 = np.random.permutation(nb_of_images)  # shufling the input
+        images = images[perm1]
+        labels = labels[perm1]
+
+        images_training = images[validation_size: nb_of_images]
+        labels_training = labels[validation_size: nb_of_images]
+
+        images_validation = images[0: validation_size]
+        labels_validation = labels[0: validation_size]
+
+        with tf.Session() as sess:
+            sess.run(tf.initialize_all_variables())
+
+            for i in range(nb_of_epoches): #antal epoker
+                size_of_training_data = images_training.shape[0]
+                perm = np.random.permutation(size_of_training_data) #shufling the input
+                images_training = images_training[perm]
+                labels_training = labels_training[perm]
+
+                for j in range(0, size_of_training_data, batch_size):
+                    start = j
+                    end = min(start + batch_size, size_of_training_data)
+
+                    img = images_training[start : end]
+                    lab = labels_training[start : end]
+
+                    if j == 0:
+                        train_accuracy = accuracy.eval(feed_dict={x: img, y_: lab, keep_prob: 1.0})
+                        print("step %d, training accuracy %g" % (i, train_accuracy))
+                    train_step.run(feed_dict={x: img, y_: lab, keep_prob: 0.5})
+
+            in_sample_acc = sess.run(accuracy, feed_dict={x: images_validation, y_: labels_validation, keep_prob: 1.0})
+            print('in sample accuracy:', in_sample_acc)
+            mean_of_acc.append(in_sample_acc)
 
 
-    with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+            """
+            out_of_sample_acc = sess.run(accuracy, feed_dict={x: images_test, y_: labels_test, keep_prob: 1.0})
+            print('out of sample accuracy:', out_of_sample_acc)
+            """
 
-        images_training = images[validation_size : nb_of_images]
-        labels_training = labels[validation_size : nb_of_images]
-
-        images_validation = images[0 : validation_size]
-        labels_validation = labels[0 : validation_size]
-
-        for i in range(nb_of_epoches): #antal epoker
-            size_of_training = nb_of_images - validation_size
-            perm = np.random.permutation(size_of_training) #shufling the input
-            images_training = images_training[perm]
-            labels_training = labels_training[perm]
-            for j in range(0, size_of_training, batch_size):
-                start = j
-                end = min(start + batch_size, size_of_training)
-
-                img = images_training[start : end]
-                lab = labels_training[start : end]
-
-                if j == 0:
-                    train_accuracy = accuracy.eval(feed_dict={x: img, y_: lab, keep_prob: 1.0})
-                    print("step %d, training accuracy %g" % (i, train_accuracy))
-                train_step.run(feed_dict={x: img, y_: lab, keep_prob: 0.5})
-
-        in_sample_acc = sess.run(accuracy, feed_dict={x: images_validation, y_: labels_validation, keep_prob: 1.0})
-        out_of_sample_acc = sess.run(accuracy, feed_dict={x: images_test, y_: labels_test, keep_prob: 1.0})
-        print('in sample accuracy:', in_sample_acc)
-        print('out of sample accuracy:', out_of_sample_acc)
+    print('validation accuracy (mean of %d runs): ' %(cv), np.mean(mean_of_acc))
 
 
 # initialising weights
