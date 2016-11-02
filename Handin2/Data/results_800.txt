@@ -1,0 +1,134 @@
+Batch 20
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.949904
+out of sample accuracy:  0.94845
+
+Batch 20
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.943802
+out of sample accuracy:  0.952455
+
+Batch 20
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.947335
+out of sample accuracy:  0.951292
+
+Batch 20
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.959859
+out of sample accuracy:  0.958915
+
+Batch 20
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.963391
+out of sample accuracy:  0.958398
+
+Batch 20
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.952152
+out of sample accuracy:  0.957623
+
+Batch 30
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.944766
+out of sample accuracy:  0.952842
+
+Batch 30
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.943481
+out of sample accuracy:  0.95168
+
+Batch 30
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.946692
+out of sample accuracy:  0.951034
+
+Batch 30
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.954078
+out of sample accuracy:  0.95646
+
+Batch 30
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.96307
+out of sample accuracy:  0.958656
+
+Batch 30
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.959216
+out of sample accuracy:  0.956977
+
+Batch 40
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.955042
+out of sample accuracy:  0.954393
+
+Batch 40
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.953436
+out of sample accuracy:  0.952067
+
+Batch 40
+Hidden size 800
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.952794
+out of sample accuracy:  0.948579

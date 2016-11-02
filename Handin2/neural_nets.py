@@ -17,11 +17,11 @@ def main():
     best_reg_rate = 0
     best_acc = 0
 
-    for hidden_size in np.arange(400, 1201, 400):
-        for learning_rate in np.arange(0.0005, 0.0016, 0.0005):
-            for batch_size in np.arange(20, 41, 10):
-                for nb_of_epoches in np.arange(10, 21, 10):
-                    for reg_rate in np.arange(0.00001, 0.001, 0.0001):
+    for hidden_size in [400, 800, 1200]:
+        for learning_rate in [0.001, 0.0015, 0.0005]:
+            for batch_size in [20, 30, 40]:
+                for nb_of_epoches in [10, 20]:
+                    for reg_rate in [0.001, 0.0001, 0.00001]:
 
                         # placeholder for input layer
                         x = tf.placeholder(tf.float32, shape=[None, 784])
@@ -127,13 +127,13 @@ def main():
                                 # print('out of sample accuracy:', out_of_sample_acc)
                                 mean_of_test_acc.append(out_of_sample_acc)
 
-                        print("Batch", best_batch_size)
-                        print("Hidden size", best_hidden_size)
-                        print("Learning rate", best_learning_rate)
-                        print("Nb of epoches", best_nb_of_epoches)
-                        print("Reg rate", best_reg_rate)
+                        print("\nBatch", batch_size)
+                        print("Hidden size", hidden_size)
+                        print("Learning rate", learning_rate)
+                        print("Nb of epoches", nb_of_epoches)
+                        print("Reg rate", reg_rate)
 
-                        print('\nMEANS of %d runs: ' %(cv))
+                        print('MEANS of %d runs ' %(cv))
                         print('validation accuracy: ', np.mean(mean_of_val_acc))
                         print('out of sample accuracy: ',np.mean(mean_of_test_acc))
 
@@ -150,6 +150,7 @@ def main():
     print("All time best learning rate", best_learning_rate)
     print("All time best nb of epoches", best_nb_of_epoches)
     print("All time best reg rate", best_reg_rate)
+    print("All time best accuracy", best_acc)
 
 # initialising weights
 def weight_variable(shape):

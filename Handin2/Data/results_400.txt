@@ -1,0 +1,485 @@
+Batch 20
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.952794
+out of sample accuracy:  0.95155
+
+Batch 20
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.947335
+out of sample accuracy:  0.949871
+
+Batch 20
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.949904
+out of sample accuracy:  0.947674
+
+Batch 20
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.96307
+out of sample accuracy:  0.959302
+
+Batch 20
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.95729
+out of sample accuracy:  0.959302
+
+Batch 20
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.962428
+out of sample accuracy:  0.956331
+
+Batch 30
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.953115
+out of sample accuracy:  0.950775
+
+Batch 30
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.952152
+out of sample accuracy:  0.952455
+
+Batch 30
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.947335
+out of sample accuracy:  0.950775
+
+Batch 30
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.956968
+out of sample accuracy:  0.952972
+
+Batch 30
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.962428
+out of sample accuracy:  0.960207
+
+Batch 30
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.9544
+out of sample accuracy:  0.956718
+
+Batch 40
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.943802
+out of sample accuracy:  0.949612
+
+Batch 40
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.944444
+out of sample accuracy:  0.955297
+
+Batch 40
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.955042
+out of sample accuracy:  0.951421
+
+Batch 40
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.959216
+out of sample accuracy:  0.958398
+
+Batch 40
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.958895
+out of sample accuracy:  0.958915
+
+Batch 40
+Hidden size 400
+Learning rate 0.001
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.9544
+out of sample accuracy:  0.956331
+
+Batch 20
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.944444
+out of sample accuracy:  0.945349
+
+Batch 20
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.946371
+out of sample accuracy:  0.948837
+
+Batch 20
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.946692
+out of sample accuracy:  0.950258
+
+Batch 20
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.959538
+out of sample accuracy:  0.955943
+
+Batch 20
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.953757
+out of sample accuracy:  0.954264
+
+Batch 20
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.956005
+out of sample accuracy:  0.956331
+
+Batch 30
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.945087
+out of sample accuracy:  0.951421
+
+Batch 30
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.953436
+out of sample accuracy:  0.952067
+
+Batch 30
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.947014
+out of sample accuracy:  0.94522
+
+Batch 30
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.952794
+out of sample accuracy:  0.954651
+
+Batch 30
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.955042
+out of sample accuracy:  0.958527
+
+Batch 30
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.954078
+out of sample accuracy:  0.955814
+
+Batch 40
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.957932
+out of sample accuracy:  0.947674
+
+Batch 40
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.947656
+out of sample accuracy:  0.951163
+
+Batch 40
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.952152
+out of sample accuracy:  0.951292
+
+Batch 40
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.956326
+out of sample accuracy:  0.95491
+
+Batch 40
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.957932
+out of sample accuracy:  0.956718
+
+Batch 40
+Hidden size 400
+Learning rate 0.0015
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.956647
+out of sample accuracy:  0.954651
+
+Batch 20
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.950225
+out of sample accuracy:  0.949354
+
+Batch 20
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.955042
+out of sample accuracy:  0.95323
+
+Batch 20
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.94605
+out of sample accuracy:  0.95
+
+Batch 20
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.961785
+out of sample accuracy:  0.95646
+
+Batch 20
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.962107
+out of sample accuracy:  0.956977
+
+Batch 20
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.958253
+out of sample accuracy:  0.957106
+
+Batch 30
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.947977
+out of sample accuracy:  0.950646
+
+Batch 30
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.942197
+out of sample accuracy:  0.946382
+
+Batch 30
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.947014
+out of sample accuracy:  0.949096
+
+Batch 30
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.94605
+out of sample accuracy:  0.957494
+
+Batch 30
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.962428
+out of sample accuracy:  0.956977
+
+Batch 30
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.956968
+out of sample accuracy:  0.954522
+
+Batch 40
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.939949
+out of sample accuracy:  0.94832
+
+Batch 40
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.944444
+out of sample accuracy:  0.946512
+
+Batch 40
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 10
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.947977
+out of sample accuracy:  0.947158
+
+Batch 40
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 0.001
+MEANS of 3 runs
+validation accuracy:  0.954721
+out of sample accuracy:  0.956847
+
+Batch 40
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 0.0001
+MEANS of 3 runs
+validation accuracy:  0.958574
+out of sample accuracy:  0.959819
+
+Batch 40
+Hidden size 400
+Learning rate 0.0005
+Nb of epoches 20
+Reg rate 1e-05
+MEANS of 3 runs
+validation accuracy:  0.953115
+out of sample accuracy:  0.959561
