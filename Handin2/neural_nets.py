@@ -68,7 +68,9 @@ def main():
     cv = 3
     validation_size = math.floor(nb_of_images/10)
 
-    mean_of_acc = []
+    mean_of_val_acc = []
+    mean_of_test_acc = []
+
 
     for k in range(cv):  # for k-fold cross validation where we can independently choose how large each test set is and how many trials you average over
         perm1 = np.random.permutation(nb_of_images)  # shufling the input
@@ -103,16 +105,16 @@ def main():
                     train_step.run(feed_dict={x: img, y_: lab, keep_prob: 0.5})
 
             in_sample_acc = sess.run(accuracy, feed_dict={x: images_validation, y_: labels_validation, keep_prob: 1.0})
-            print('in sample accuracy:', in_sample_acc)
-            mean_of_acc.append(in_sample_acc)
+            print('validation accuracy:', in_sample_acc)
+            mean_of_val_acc.append(in_sample_acc)
 
-
-            """
             out_of_sample_acc = sess.run(accuracy, feed_dict={x: images_test, y_: labels_test, keep_prob: 1.0})
             print('out of sample accuracy:', out_of_sample_acc)
-            """
+            mean_of_test_acc.append(out_of_sample_acc)
 
-    print('validation accuracy (mean of %d runs): ' %(cv), np.mean(mean_of_acc))
+    print('\nMEANS of %d runs: ' %(cv))
+    print('validation accuracy: ', np.mean(mean_of_val_acc))
+    print('out of sample accuracy: ',np.mean(mean_of_test_acc))
 
 
 # initialising weights
