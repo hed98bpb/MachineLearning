@@ -17,11 +17,11 @@ def main():
     best_reg_rate = 0
     best_acc = 0
 
-    for hidden_size in np.arange(400, 1200, 400):
-        for learning_rate in np.arange(0.0005, 0.0015, 0.0005):
-            for batch_size in np.arange(20, 40, 10):
-                for nb_of_epoches in np.arange(10, 20, 10):
-                    for reg_rate in np.array[0.001, 0.0001, 0.00001]:
+    for hidden_size in np.arange(400, 1201, 400):
+        for learning_rate in np.arange(0.0005, 0.0016, 0.0005):
+            for batch_size in np.arange(20, 41, 10):
+                for nb_of_epoches in np.arange(10, 21, 10):
+                    for reg_rate in np.arange(0.00001, 0.001, 0.0001):
 
                         # placeholder for input layer
                         x = tf.placeholder(tf.float32, shape=[None, 784])
@@ -31,8 +31,9 @@ def main():
 
                         """
                         Densely connected layer
-                        """
+
                         hidden_size = 800
+                        """
 
                         W_fc1 = weight_variable([28*28, hidden_size])
                         b_fc1 = bias_variable([hidden_size])
@@ -56,11 +57,12 @@ def main():
 
                         """
                         Testing and evaluation
-                        """
+
                         learning_rate = 0.001
                         batch_size = 25  # usually between 10 and 30
                         nb_of_epoches = 10
                         reg_rate = 0.0001
+                        """
 
                         cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
                         loss = tf.reduce_mean(cross_entropy)
@@ -137,11 +139,11 @@ def main():
                             best_nb_of_epoches = nb_of_epoches
                             best_reg_rate = reg_rate
 
-    print("Best batch %s", best_batch_size)
-    print("Best hidden size %s", best_hidden_size)
-    print("Best learning rate %s", best_learning_rate)
-    print("Best nb of epoches %s", best_nb_of_epoches)
-    print("Best reg rate %s", best_reg_rate)
+    print("Best batch", best_batch_size)
+    print("Best hidden size", best_hidden_size)
+    print("Best learning rate", best_learning_rate)
+    print("Best nb of epoches", best_nb_of_epoches)
+    print("Best reg rate", best_reg_rate)
 
 # initialising weights
 def weight_variable(shape):
