@@ -150,6 +150,7 @@ def main():
     print("All time best learning rate", best_learning_rate)
     print("All time best nb of epoches", best_nb_of_epoches)
     print("All time best reg rate", best_reg_rate)
+    print("All time best  accuracy", best_acc)
 
 # initialising weights
 def weight_variable(shape):
