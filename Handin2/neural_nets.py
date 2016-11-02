@@ -116,21 +116,27 @@ def main():
 
                                         if j == 0:
                                             train_accuracy = accuracy.eval(feed_dict={x: img, y_: lab, keep_prob: 1.0})
-                                            print("step %d, training accuracy %g" % (i, train_accuracy))
+                                            # print("step %d, training accuracy %g" % (i, train_accuracy))
                                         train_step.run(feed_dict={x: img, y_: lab, keep_prob: 0.5})
 
                                 in_sample_acc = sess.run(accuracy, feed_dict={x: images_validation, y_: labels_validation, keep_prob: 1.0})
-                                print('validation accuracy:', in_sample_acc)
+                                # print('validation accuracy:', in_sample_acc)
                                 mean_of_val_acc.append(in_sample_acc)
 
                                 out_of_sample_acc = sess.run(accuracy, feed_dict={x: images_test, y_: labels_test, keep_prob: 1.0})
-                                print('out of sample accuracy:', out_of_sample_acc)
+                                # print('out of sample accuracy:', out_of_sample_acc)
                                 mean_of_test_acc.append(out_of_sample_acc)
-                        """
+
+                        print("Batch", best_batch_size)
+                        print("Hidden size", best_hidden_size)
+                        print("Learning rate", best_learning_rate)
+                        print("Nb of epoches", best_nb_of_epoches)
+                        print("Reg rate", best_reg_rate)
+
                         print('\nMEANS of %d runs: ' %(cv))
                         print('validation accuracy: ', np.mean(mean_of_val_acc))
                         print('out of sample accuracy: ',np.mean(mean_of_test_acc))
-                        """
+
                         if best_acc < np.mean(mean_of_val_acc):
                             best_acc = np.mean(mean_of_val_acc)
                             best_batch_size = batch_size
@@ -139,11 +145,11 @@ def main():
                             best_nb_of_epoches = nb_of_epoches
                             best_reg_rate = reg_rate
 
-    print("Best batch", best_batch_size)
-    print("Best hidden size", best_hidden_size)
-    print("Best learning rate", best_learning_rate)
-    print("Best nb of epoches", best_nb_of_epoches)
-    print("Best reg rate", best_reg_rate)
+    print("All time best batch", best_batch_size)
+    print("All time best hidden size", best_hidden_size)
+    print("All time best learning rate", best_learning_rate)
+    print("All time best nb of epoches", best_nb_of_epoches)
+    print("All time best reg rate", best_reg_rate)
 
 # initialising weights
 def weight_variable(shape):
