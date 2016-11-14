@@ -41,3 +41,20 @@ print(obs)
 print(states)
 
 # finding Z* (viterbi decoding) Z* is the overall most likely explanation of X:
+
+omega = [[0 for col in range(len(X)-1)] for row in range(len(states))]
+
+# Base case:
+for i in range(len(states)):
+    omega[i][0] = pi[i]
+
+for n in range(1, len(X)-1):
+    for k in range(len(states)):
+        if phi[k][obs[X[n]]] != 0:
+            for j in range(len(obs)):
+                if A[k][j] != 0:
+                    omega[k][n] = max(omega[k][n], phi[k][obs[X[n]]] * omega[j][n-1] * A[k][j])
+
+for l in omega:
+    print(l)
+
