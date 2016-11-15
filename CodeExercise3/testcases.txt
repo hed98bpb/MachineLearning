@@ -9,6 +9,7 @@ Obs.:	GTTTCCCAGTGTATATCGAGGGATACTACGTGCATAGTAACATCGGCCAA
 Vit.:	44444444444432132132132132132132132132132132132132
 Viterbi loglikelihood (natural log): -70.73228857440488
 
+
 Test case 2 (a string of observables of length 1000):
 -----------------------------------------------------
 
