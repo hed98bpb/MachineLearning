@@ -63,21 +63,24 @@ C_to_C = 0
 C33_to_31 = C33_to_34 = C33_to_37 = C33_to_40 = 0
 C_to_N = 0
 
-
 for anno in annotations:
     previous_seen = annotations[anno][0]
     C_counter = 0
-    for i in range(1,len(annotations[anno])):
+    for i in range(1, len(annotations[anno])):
+        # annotation is N or R
         if annotations[anno][i] == ('N' or 'R'):
             if previous_seen == ('N' or 'R'):
                 N_to_N += 1
             else:
                 C_to_N += 1
+
+        # annotation is C
         else:
-            codon = genomes[('genome' + anno[len(anno) - 1])][i:i + 3]
-            if C_counter % 3 == 0:
-                C_counter += 1
-                if previous_seen == ('N' or 'R'):
+            if C_counter % 3 == 0:  # start of a codon with 3 observables in
+
+                codon = genomes[('genome' + anno[len(anno) - 1])][i:i + 3]  # get codon
+
+                if previous_seen == ('N' or 'R'):  # then start-codon
                     if codon == 'ATG':
                         N_to_1 += 1
                     elif codon == 'ATC':
@@ -99,7 +102,7 @@ for anno in annotations:
                     elif codon == 'TTG':
                         N_to_28 += 1
 
-                else:
+                else:  # privious seen is C
                     if codon == 'TAA':
                         C33_to_34 += 1
                     elif codon == 'TAG':
@@ -109,11 +112,11 @@ for anno in annotations:
                     else:
                         C33_to_31 += 1
 
-            else:
+            else:  # in the middle of a codon
                 C_to_C += 1
 
+            C_counter += 1
         previous_seen = annotations[anno][i]
-print(A)
 
 # Calculate A
 all_N_to = N_to_N + N_to_1 + N_to_4 + N_to_7 + N_to_10 + N_to_13 + N_to_16 + N_to_19 + N_to_22 + N_to_25 + N_to_28
@@ -133,6 +136,9 @@ A[33][31] = C33_to_31/all_C_to
 A[33][34] = C33_to_34/all_C_to
 A[33][37] = C33_to_37/all_C_to
 A[33][40] = C33_to_40/all_C_to
+
+for line in A:
+    print(line)
 
 
 # Initializing phi [observable][state]
@@ -172,10 +178,9 @@ for anno in annotations:
 
 
 #TODO calculate emissions
-#TODO check A
 
 
-print(NR_seen)
+
 
 #A
 #phi
