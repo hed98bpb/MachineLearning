@@ -25,6 +25,13 @@ def read_fasta_file(filename):
         sequences[name] = ''.join(lines)
     return sequences
 
+def write_fasta_file(seq_name, seq, filename):
+    output_file = 'Data/' + filename + '.fa'
+    file = open(output_file, 'w')
+    file.write('seq_name\n')
+    file.write(seq)
+    file.close()
+
 
 def write_hmm_file(obs, pi, A, phi, output_filename):
     output_file = 'Hmm_files/' + output_filename + '.txt'
