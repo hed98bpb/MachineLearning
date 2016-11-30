@@ -99,6 +99,7 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
     # Calculating A:
     all_N_to = N_to_N + N_to_1 + N_to_4 + N_to_7 + N_to_10 + N_to_13 + N_to_16 + N_to_19 + N_to_22 + N_to_25 + N_to_28
     assert(all_N_to != 0)
+    A[0][0] = N_to_N / all_N_to
     A[0][1] = N_to_1 / all_N_to
     A[0][4] = N_to_4 / all_N_to
     A[0][7] = N_to_7 / all_N_to
@@ -110,8 +111,9 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
     A[0][25] = N_to_25 / all_N_to
     A[0][28] = N_to_28 / all_N_to
 
-    all_C_to = C_to_C + C33_to_34 + C33_to_37 + C33_to_40 + C33_to_31
+    all_C_to = C33_to_34 + C33_to_37 + C33_to_40 + C33_to_31
     assert (all_C_to != 0)
+
     A[33][31] = C33_to_31 / all_C_to
     A[33][34] = C33_to_34 / all_C_to
     A[33][37] = C33_to_37 / all_C_to

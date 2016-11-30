@@ -3,6 +3,7 @@ from Handin3.file_handler import read_fasta_file, write_hmm_file
 from Handin3.training_by_counting import train_by_counting
 from Handin3.hmm_vit_log import run_viterbi
 import time
+import numpy as np
 
 # Initializing the model:
 obs, pi, A, phi = get_model()
@@ -73,7 +74,8 @@ for gen in unan_genomes:
 print(len(predicted_annos))
 
 """
-
-X = genomes['genome1'][:100]
+for line in A:
+    assert(np.sum(line)==1)
+X = 'CCCCCCCATGATGATGATGATGATGATGATGCCCTAATAATAATAATAATAATAACCCCCCCCC'
 print(run_viterbi(obs, pi, A, phi, X))
 
