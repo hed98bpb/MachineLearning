@@ -51,7 +51,9 @@ pi, A, phi = train_by_counting(obs, pi, A, phi, annotations, genomes)
 
 write_hmm_file(obs, pi, A, phi, 'tbc_hmm')
 
+print('Done training')
 
+"""
 # Predict structure for the rest of the genomes in dataset:
 unan_genomes = {}
 predicted_annos = {}
@@ -68,8 +70,10 @@ for gen in unan_genomes:
     print("--- %s seconds ---" % (time.time() - start_time))
     predicted_annos['annotation' + gen[len('genome'):]] = z
 
-
-
 print(len(predicted_annos))
 
+"""
+
+X = genomes['genome1'][:100]
+print(run_viterbi(obs, pi, A, phi, X))
 

@@ -52,8 +52,8 @@ def get_model():
     A[37][38] = A[38][39] = A[39][0] = 1
     A[40][41] = A[41][42] = A[42][0] = 1
 
-    # Initializing phi[observable][state] shape=(4,43)
-    phi = [[0 for i in range(nbf_states)] for i in range(len(obs))]
+    # Initializing phi[state][obsevable] shape=(43,4)
+    phi = [[0 for i in range(len(obs))] for i in range(nbf_states)]
 
     # Lists over states where we emit a specific letters in start- and end-codons
     Alist = [1, 4, 7, 13, 9, 27, 35, 36, 38]
@@ -62,12 +62,12 @@ def get_model():
     Tlist = [2, 5, 8, 11, 14, 15, 17, 20, 21, 23, 25, 26, 28, 29, 34, 37, 40]
 
     for i in Alist:
-        phi[obs['A']][i] = 1
+        phi[i][obs['A']] = 1
     for i in Clist:
-        phi[obs['C']][i] = 1
+        phi[i][obs['C']] = 1
     for i in Glist:
-        phi[obs['G']][i] = 1
+        phi[i][obs['G']] = 1
     for i in Tlist:
-        phi[obs['T']][i] = 1
+        phi[i][obs['T']] = 1
 
     return obs, pi, A, phi

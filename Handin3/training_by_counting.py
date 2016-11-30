@@ -118,12 +118,12 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
     A[33][40] = C33_to_40 / all_C_to
 
 
-    # Calculating phi[observable][state]:
+    # Calculating phi[state][observable]:
     for i in range(len(obs)):
-        phi[i][0] = emissions_from_N[i] / np.sum(emissions_from_N)
-        phi[i][31] = emissions_from_31[i] / np.sum(emissions_from_31)
-        phi[i][32] = emissions_from_32[i] / np.sum(emissions_from_32)
-        phi[i][33] = emissions_from_33[i] / np.sum(emissions_from_33)
+        phi[0][i] = emissions_from_N[i] / np.sum(emissions_from_N)
+        phi[31][i] = emissions_from_31[i] / np.sum(emissions_from_31)
+        phi[32][i] = emissions_from_32[i] / np.sum(emissions_from_32)
+        phi[33][i] = emissions_from_33[i] / np.sum(emissions_from_33)
 
     return pi, A, phi
 
