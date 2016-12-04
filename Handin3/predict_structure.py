@@ -8,7 +8,7 @@ import time
 # Initializing the model:
 obs, pi, A, phi = get_model()
 
-write_hmm_file(obs, pi, A, phi, 'init_hmm')
+# write_hmm_file(obs, pi, A, phi, 'init_hmm')
 
 # Getting training data:
 genomes = {}
@@ -47,20 +47,19 @@ for anno in annotations:
 annotations.update(reversed_annotations)
 genomes.update(reversed_genomes)
 
+fold_annotations = {key: annotations[key] for key in ['annotation1', 'annotation3', 'annotation4', 'annotation5', 'annotation6', 'annotation8', 'annotation9', 'annotation10']}
+fold_genomes = {key: genomes[key] for key in ['genome1', 'genome3', 'genome4', 'genome5', 'genome6', 'genome8', 'genome9', 'genome10']}
 # training by counting:
-pi, A, phi = train_by_counting(obs, pi, A, phi, annotations, genomes)
+pi, A, phi = train_by_counting(obs, pi, A, phi, fold_annotations, fold_genomes)
 
-write_hmm_file(obs, pi, A, phi, 'tbc_hmm')
+# write_hmm_file(obs, pi, A, phi, 'tbc_hmm')
 
 print('Done training')
 
 # Predict structure for the rest of the genomes in dataset:
 unan_genomes = {}
-
-
-for i in range(6, 11):
-    filename_g = 'Data/genome' + str(i) + '.fa'
-    unan_genomes.update(read_fasta_file(filename_g))
+filename_g = 'Data/genome2.fa'
+unan_genomes.update(read_fasta_file(filename_g))
 
 for gen in unan_genomes:
     print('Starting viterbi on: ' + gen)
@@ -69,9 +68,10 @@ for gen in unan_genomes:
     print('Finished viterbi for: ' + gen)
     print("--- %s seconds ---" % (time.time() - start_time))
 
-    name = 'annotation' + gen[len('genome'):]
+    name = 'pred_anno' + gen[len('genome'):]
     write_fasta_file(name, z, name)
 
+# exec('compare_anns.py Data/annotation1.fa pred_anno1.fa')
 
 
 

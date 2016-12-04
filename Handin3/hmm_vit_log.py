@@ -58,7 +58,8 @@ def run_viterbi(obs, pi, A, phi, X):
 def get_prediction(obs, pi, A, phi, X):
     z1 = run_viterbi(obs, pi, A, phi, X)
     X_rev = X[::-1]
-    z2 = run_viterbi(obs, pi, A, phi, X_rev)
+    z2_rev = run_viterbi(obs, pi, A, phi, X_rev)
+    z2 = z2_rev[::-1]
 
     final_z = ''
     assert(len(z1)==len(z2))
