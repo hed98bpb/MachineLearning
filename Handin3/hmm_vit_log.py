@@ -30,12 +30,10 @@ def run_viterbi(obs, pi, A, phi, X):
 
 
     # Backtracking - finding Z*:
-    for line in omega:
-        print(line)
 
 
     max_z_N_index = np.argmax([col[N - 1] for col in omega])
-    print('log P(X,Z) (loglikelihood): ', omega[max_z_N_index][N - 1])
+    # log P(X,Z) (loglikelihood): omega[max_z_N_index][N - 1]
 
     Z_star = [max_z_N_index]  # The last state in the string Z_star.
 
@@ -46,8 +44,6 @@ def run_viterbi(obs, pi, A, phi, X):
 
         z_n_index = np.argmax(column_n)
         Z_star.insert(0, z_n_index)
-
-    print(Z_star)
 
     translated_z = ''
     for i in Z_star:
