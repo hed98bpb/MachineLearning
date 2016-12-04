@@ -1,9 +1,9 @@
 from Handin3.initialize_model import get_model
-from Handin3.file_handler import read_fasta_file, write_hmm_file
+from Handin3.file_handler import read_fasta_file, write_hmm_file, write_fasta_file
 from Handin3.training_by_counting import train_by_counting
-from Handin3.hmm_vit_log import run_viterbi
+from Handin3.hmm_vit_log import get_prediction
 import time
-import numpy as np
+
 
 # Initializing the model:
 obs, pi, A, phi = get_model()
@@ -54,10 +54,9 @@ write_hmm_file(obs, pi, A, phi, 'tbc_hmm')
 
 print('Done training')
 
-"""
 # Predict structure for the rest of the genomes in dataset:
 unan_genomes = {}
-predicted_annos = {}
+
 
 for i in range(6, 11):
     filename_g = 'Data/genome' + str(i) + '.fa'
@@ -66,16 +65,14 @@ for i in range(6, 11):
 for gen in unan_genomes:
     print('Starting viterbi on: ' + gen)
     start_time = time.time()
-    z = run_viterbi(obs, pi, A, phi, unan_genomes[gen])
+    z = get_prediction(obs, pi, A, phi, unan_genomes[gen])
     print('Finished viterbi for: ' + gen)
     print("--- %s seconds ---" % (time.time() - start_time))
-    predicted_annos['annotation' + gen[len('genome'):]] = z
 
-print(len(predicted_annos))
+    name = 'annotation' + gen[len('genome'):]
+    write_fasta_file(name, z, name)
 
-"""
-for line in A:
-    assert(np.sum(line)==1)
-X = 'CCCCCCCATGATGATGATGATGATGATGATGCCCTAATAATAATAATAATAATAACCCCCCCCC'
-print(run_viterbi(obs, pi, A, phi, X))
+
+
+
 

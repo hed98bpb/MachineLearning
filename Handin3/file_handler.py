@@ -26,9 +26,9 @@ def read_fasta_file(filename):
     return sequences
 
 def write_fasta_file(seq_name, seq, filename):
-    output_file = 'Data/' + filename + '.fa'
+    output_file = 'Predicted_annos/' + filename + '.fa'
     file = open(output_file, 'w')
-    file.write('seq_name\n')
+    file.write('>' + seq_name + '\n')
     file.write(seq)
     file.close()
 

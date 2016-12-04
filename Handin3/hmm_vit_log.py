@@ -1,5 +1,9 @@
 import numpy as np
 import math
+
+
+
+
 def run_viterbi(obs, pi, A, phi, X):
     # getting the hmm and X:
     N = len(X)
@@ -53,3 +57,25 @@ def run_viterbi(obs, pi, A, phi, X):
             translated_z = translated_z + 'C'
 
     return translated_z
+
+
+def get_prediction(obs, pi, A, phi, X):
+    z1 = run_viterbi(obs, pi, A, phi, X)
+    X_rev = X[::-1]
+    z2 = run_viterbi(obs, pi, A, phi, X_rev)
+
+    final_z = ''
+    assert(len(z1)==len(z2))
+    for i in range(len(z1)):
+        if z1[i] == 'N' and z2[i] == 'N':
+            final_z += 'N'
+        elif z1[i] == 'N' and z2[i] == 'C':
+            final_z += 'R'
+        elif z1[i] == 'C' and z2[i] == 'N':
+            final_z += 'C'
+
+        # this will not happen that z1 = C and z2 = C?
+        else:
+            final_z += 'C'
+
+    return final_z
