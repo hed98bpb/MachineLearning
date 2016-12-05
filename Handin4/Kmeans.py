@@ -2,6 +2,7 @@ import numpy as np
 import sklearn.datasets
 import sklearn.decomposition
 from scipy.spatial import distance
+import random
 
 
 # Load Iris data set
@@ -54,8 +55,9 @@ def kmeans(data, k, epsilon):
     data = np.asarray(data)
     n, d = data.shape
 
-    # Initialize centers
-    centers = data[[0, 50, 100], :]#TODO should be choosen randomly
+    # Initialize centers with random chosen points in data
+    k_random_nbs = random.sample(range(n), k)
+    centers = data[[k_random_nbs], :]
 
     tired = False
     old_centers = np.zeros_like(centers)
@@ -71,4 +73,7 @@ def kmeans(data, k, epsilon):
 
     return centers
 
-closest(data, data[[0, 50, 100], :])
+random_nbs = random.sample(range(len(data)), 3)
+print('randomly choosen numbers = entries for the random center-points in data: ', random_nbs)
+closest(data, data[random_nbs, :])
+
