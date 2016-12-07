@@ -1,24 +1,13 @@
 import numpy as np
-import sklearn.datasets
-import sklearn.decomposition
 from scipy.spatial import distance
 import random
-
-
-# Load Iris data set
-iris = sklearn.datasets.load_iris()
-data = iris['data']
-labels = iris['target']
-# Apply PCA
-pca = sklearn.decomposition.PCA(2)
-data_pca = pca.fit_transform(data)
 
 
 def closest(data, centers):
     n, d = data.shape
     k, d_ = centers.shape
     assert d == d_
-    rep = np.zeros(n)
+    rep = np.zeros(n, dtype=np.int)
 
     # Our code for finding the center that is closest to each entry in data
     for i in range(n):
@@ -29,10 +18,9 @@ def closest(data, centers):
             if dist < min_dist[0]:
                 min_dist = (dist, c)
 
-        rep[i] = min_dist[1]
+        rep[i] = int(min_dist[1])
 
     # rep should contain a representative index for each data point
-    print(rep)
     assert rep.shape == (n,)
     assert np.all((0 <= rep) & (rep < k))
     return rep
@@ -46,7 +34,14 @@ def kmeans_cost(data, centers, rep):
 
     # Insert your code here
     data_rep = centers[rep]
-    cost = ...
+
+    TD_C = np.zeros(3)
+    for i in range(n):
+        dist = distance.euclidean(data[i], data_rep[i])
+        TD_C[rep[i]] += dist**2
+    TD_C = np.sqrt(TD_C)
+
+    cost = np.sqrt(np.sum(TD_C**2))
 
     return cost
 
@@ -57,7 +52,7 @@ def kmeans(data, k, epsilon):
 
     # Initialize centers with random chosen points in data
     k_random_nbs = random.sample(range(n), k)
-    centers = data[[k_random_nbs], :]
+    centers = data[k_random_nbs, :]
 
     tired = False
     old_centers = np.zeros_like(centers)
@@ -65,15 +60,28 @@ def kmeans(data, k, epsilon):
         old_centers[:] = centers
 
         # Reassign points to nearest center
-        # and handle empty clusters.
-        #TODO
+        rep = closest(data, centers)
+
+        sum = np.zeros((k, d))
+        size = np.zeros(k)
+
+        for i in range(n):
+            size[rep[i]] += 1
+            for a in range(d):
+                sum[rep[i]][a] += data[i][a]
+
+        for i in range(k):
+            if size[i] == 0:
+                # TODO: and handle empty clusters.
+                print('FUCK! empty cluster')
+            else:
+                centers[i :] = sum[i :] / size[i]
 
         dist = np.sqrt(((centers - old_centers) ** 2).sum(axis=1))
         tired = np.max(dist) <= epsilon
 
-    return centers
+        cost = kmeans_cost(data, centers, rep)
 
-random_nbs = random.sample(range(len(data)), 3)
-print('randomly choosen numbers = entries for the random center-points in data: ', random_nbs)
-closest(data, data[random_nbs, :])
+    return centers, cost
+
 
