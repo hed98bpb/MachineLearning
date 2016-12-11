@@ -1,10 +1,11 @@
 from scipy.stats import multivariate_normal
 import numpy as np
-from Handin4.Kmeans import kmeans
+from Handin4.Kmeans import kmeans, closest
+
 
 # HELPERFUNCTION:
 # takes a description of a Gaussian Mixture (that is, the mean, covariance matrix and prior of each Gaussian)
-# returns the probability densities of each point
+# returns the probability densities of each point: P(x) slide 34 d. 23/11
 def pdf(points, mean, cov, prior):
     points, mean, cov = np.asarray(points), np.asarray(mean), np.asarray(cov)
     prior = np.asarray(prior)
@@ -34,7 +35,7 @@ def pdf(points, mean, cov, prior):
     return prob
 
 # HELPERFUNCTION:
-# computes the most likely class of each point under a given Gaussian Mixture
+# computes the most likely class of each point under a given Gaussian Mixture: P(C_i|x)
 def most_likely(points, mean, cov, prior):
     prob = pdf(points, mean, cov, prior)
     return np.argmax(prob, axis=1)
@@ -49,30 +50,62 @@ def em(points, k, epsilon, mean=None):
         # picks k points as mean
         min_cost = np.inf
         for i in range(10):
-            centers, cost = kmeans(points, k, epsilon)
+            centers, cost = kmeans(points, k, 0.01) # don't use the same epsilon in k-means as in EM.
             if cost < min_cost:
                 mean = centers
 
     # Validate input
-    mean = np.asarray(mean)
+    mean = np.asarray(mean) # my_i in slide 36 d. 23/11
     k_, d_ = mean.shape
     assert k == k_
     assert d == d_
 
-    # Initialize cov, prior
-    cov = ...
-    prior = ...
+    # Initialize cov, prior (as done in http://www.vlfeat.org/overview/gmm.html almost...
+    # if we assume all dimensions are independent then use diagonal covariance matrix.
+    cov = np.zeros((k, d, d)) # eta_i in slide 36 d. 23/11
+    prior = np.zeros(k) # W_i in slide 36 d. 23/11
+    assigned_points = closest(points, mean)
+
+    for i in range(k):
+        cluster_id = (assigned_points==i)
+        cluster = points[cluster_id, :]
+        cluster_size = len(cluster)
+
+        prior[i] = cluster_size / k
+
+        # Handling empty clusters TODO: ask Mathias if this is how it should be initialized
+        if cluster_size == 0:
+            cov[i,:,:] = np.cov(np.transpose(points))
+        else:
+            cov[i,:,:] = np.cov(np.transpose(cluster))
+
 
     tired = False
     old_mean = np.zeros_like(mean)
     while not tired:
         old_mean[:] = mean
 
-        # Expectation step
-        #TODO
+        # Expectation step:
+        ml_cluster_assigned = most_likely(points, mean, cov, prior)
 
-        # Maximization step
-        #TODO
+
+        # Maximization step:
+        for i in range(k):
+            cluster_id = (ml_cluster_assigned == i)
+            cluster = points[cluster_id, :]
+            cluster_size = len(cluster)
+
+            # re-assign prior
+            prior[i] = cluster_size / k
+
+            # TODO: re-assign mean! else this will only run once!
+
+            # re-assign cov
+            if cluster_size == 0: # Handling empty clusters
+                cov[i, :, :] = np.cov(np.transpose(points))
+            else:
+                cov[i, :, :] = np.cov(np.transpose(cluster))
+
 
         # Finish condition
         dist = np.sqrt(((mean - old_mean) ** 2).sum(axis=1))
