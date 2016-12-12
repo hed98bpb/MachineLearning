@@ -72,8 +72,9 @@ def kmeans(data, k, epsilon):
 
         for i in range(k):
             if size[i] == 0:
-                # TODO: and handle empty clusters.
-                print('FUCK! empty cluster')
+                # Handling empty clusters.
+                print('FUCK! empty cluster in k-means - trying again')
+                return kmeans(data, k, epsilon)
             else:
                 centers[i :] = sum[i :] / size[i]
 

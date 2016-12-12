@@ -60,8 +60,7 @@ def em(points, k, epsilon, mean=None):
     assert k == k_
     assert d == d_
 
-    # Initialize cov, prior (as done in http://www.vlfeat.org/overview/gmm.html almost...
-    # if we assume all dimensions are independent then use diagonal covariance matrix.
+    # Initialize cov, prior (almost as done in http://www.vlfeat.org/overview/gmm.html)
     cov = np.zeros((k, d, d)) # eta_i in slide 36 d. 23/11
     prior = np.zeros(k) # W_i in slide 36 d. 23/11
     assigned_points = closest(points, mean)
@@ -73,12 +72,12 @@ def em(points, k, epsilon, mean=None):
 
         prior[i] = cluster_size / k
 
-        # Handling empty clusters TODO: ask Mathias if this is how it should be initialized
+        # Handling empty clusters
         if cluster_size == 0:
-            cov[i,:,:] = np.cov(np.transpose(points))
+            print('cluster empty in EM - starting over')
+            return em(points, k, epsilon)
         else:
             cov[i,:,:] = np.cov(np.transpose(cluster))
-
 
     tired = False
     old_mean = np.zeros_like(mean)
@@ -86,26 +85,30 @@ def em(points, k, epsilon, mean=None):
         old_mean[:] = mean
 
         # Expectation step:
-        ml_cluster_assigned = most_likely(points, mean, cov, prior)
-
+        pdf_ = pdf(points, mean, cov, prior)
 
         # Maximization step:
-        for i in range(k):
-            cluster_id = (ml_cluster_assigned == i)
-            cluster = points[cluster_id, :]
-            cluster_size = len(cluster)
 
             # re-assign prior
-            prior[i] = cluster_size / k
+        for i in range(k):
+            pdf_csum = np.sum(pdf_[:,i])
+            prior[i] = 1/n * pdf_csum
+            if prior[i] < 0.01: # handling almost empty cluster
+                print('cluster empty in EM - starting over')
+                return em(points, k, epsilon)
 
-            # TODO: re-assign mean! else this will only run once!
 
-            # re-assign cov
-            if cluster_size == 0: # Handling empty clusters
-                cov[i, :, :] = np.cov(np.transpose(points))
-            else:
-                cov[i, :, :] = np.cov(np.transpose(cluster))
+            # re-assign mean
+            x_sum = 0
+            for x in range(n):
+                x_sum += x * pdf_[x][i]
+            mean[i] = x_sum / pdf_csum
 
+            # re-assign cov!
+            cov_sum = 0
+            for x in range(n):
+                cov_sum += pdf_[x][i] * ((points[x] - mean[i]) * np.reshape(points[x] - mean[i], (d,1))) # reshape = transpose
+            cov[i,:,:] = cov_sum / pdf_csum
 
         # Finish condition
         dist = np.sqrt(((mean - old_mean) ** 2).sum(axis=1))
