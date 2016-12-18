@@ -83,6 +83,7 @@ def kmeans(data, k, epsilon):
 
         cost = kmeans_cost(data, centers, rep)
 
+
     return centers, cost
 
 

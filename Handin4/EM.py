@@ -1,5 +1,6 @@
 from scipy.stats import multivariate_normal
 import numpy as np
+import math
 from Handin4.Kmeans import kmeans, closest
 
 
@@ -50,7 +51,7 @@ def em(points, k, epsilon, mean=None):
         # picks k points as mean
         min_cost = np.inf
         for i in range(10):
-            centers, cost = kmeans(points, k, 0.01) # don't use the same epsilon in k-means as in EM.
+            centers, cost = kmeans(points, k, 0.001) # don't use the same epsilon in k-means as in EM.
             if cost < min_cost:
                 mean = centers
 
@@ -64,6 +65,7 @@ def em(points, k, epsilon, mean=None):
     cov = np.zeros((k, d, d)) # eta_i in slide 36 d. 23/11
     prior = np.zeros(k) # W_i in slide 36 d. 23/11
     assigned_points = closest(points, mean)
+    counter = 0
 
     for i in range(k):
         cluster_id = (assigned_points==i)
@@ -72,16 +74,20 @@ def em(points, k, epsilon, mean=None):
 
         prior[i] = cluster_size / k
 
-        # Handling empty clusters
-        if cluster_size == 0:
-            print('cluster empty in EM - starting over')
+
+        if cluster_size == 0:  # Handling empty clusters
+            print('cluster empty in EM(1) - starting over')
             return em(points, k, epsilon)
         else:
-            cov[i,:,:] = np.cov(np.transpose(cluster))
+            a = np.zeros((d,d), int)
+            di = np.diag_indices(d)
+            a[di] = 1
+            cov[i,:,:] = a
 
     tired = False
     old_mean = np.zeros_like(mean)
     while not tired:
+        counter +=1
         old_mean[:] = mean
 
         # Expectation step:
@@ -92,23 +98,27 @@ def em(points, k, epsilon, mean=None):
             # re-assign prior
         for i in range(k):
             pdf_csum = np.sum(pdf_[:,i])
-            prior[i] = 1/n * pdf_csum
-            if prior[i] < 0.01: # handling almost empty cluster
-                print('cluster empty in EM - starting over')
+            prior[i] = pdf_csum / n
+            if prior[i] < 0.001: # handling almost empty cluster
+                print('cluster empty in EM(2) - starting over')
                 return em(points, k, epsilon)
 
 
             # re-assign mean
-            x_sum = 0
+            vector_sum = np.zeros(d)
             for x in range(n):
-                x_sum += x * pdf_[x][i]
-            mean[i] = x_sum / pdf_csum
+                for j in range(d):
+                    vector_sum[j] += points[x][j] * pdf_[x][i]
+            mean[i] = vector_sum / pdf_csum
+            assert mean[i].shape == (d,)
 
             # re-assign cov!
-            cov_sum = 0
-            for x in range(n):
-                cov_sum += pdf_[x][i] * ((points[x] - mean[i]) * np.reshape(points[x] - mean[i], (d,1))) # reshape = transpose
-            cov[i,:,:] = cov_sum / pdf_csum
+            for a in range(d):
+                for b in range(d):
+                    cov_sum = 0
+                    for x in range(n):
+                        cov_sum += pdf_[x][i] * (points[x][a] - mean[i][a]) * (points[x][b] - mean[i][b])
+                    cov[i,a,b] = cov_sum / pdf_csum
 
         # Finish condition
         dist = np.sqrt(((mean - old_mean) ** 2).sum(axis=1))
@@ -118,5 +128,6 @@ def em(points, k, epsilon, mean=None):
     assert mean.shape == (k, d)
     assert cov.shape == (k, d, d)
     assert prior.shape == (k,)
+    print('number of runs: ', counter)
     return mean, cov, prior
 
