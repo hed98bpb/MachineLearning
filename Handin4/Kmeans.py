@@ -32,10 +32,9 @@ def kmeans_cost(data, centers, rep):
     assert d == d_
     assert rep.shape == (n,)
 
-    # Insert your code here
     data_rep = centers[rep]
 
-    TD_C = np.zeros(3)
+    TD_C = np.zeros(k)
     for i in range(n):
         dist = distance.euclidean(data[i], data_rep[i])
         TD_C[rep[i]] += dist**2
@@ -57,6 +56,7 @@ def kmeans(data, k, epsilon):
     tired = False
     old_centers = np.zeros_like(centers)
     while not tired:
+        print('not tired')
         old_centers[:] = centers
 
         # Reassign points to nearest center

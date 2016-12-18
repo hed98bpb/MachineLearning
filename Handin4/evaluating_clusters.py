@@ -7,7 +7,6 @@ def f1(predicted, labels):
     r = np.max(predicted) + 1
     k = np.max(labels) + 1
 
-    # TODO: Implement the F1 score here
     contingency = np.zeros((r,k))
     for x in range(n):
         contingency[predicted[x]][labels[x]] += 1
@@ -31,17 +30,17 @@ def silhouette(data, predicted):
     k = np.max(predicted) + 1
     assert predicted.shape == (n,)
 
-    # TODO: Implement the computation of the silhouette coefficient for each data point here.
     s = np.zeros(n)
     cluster_size = [1 for i in range(k)]
 
     for i in range(n):
-        mean_in = 0
         sum_in = 0
         for j in range(n):
-            if predicted[j] == predicted[i] and j != i:
-                sum_in += distance.euclidean(data[i], data[j])
-                cluster_size[predicted[i]] += 1
+            if i!=j:
+                cluster_size[predicted[j]] += 1
+                if predicted[j] == predicted[i] and j != i:
+                    sum_in += distance.euclidean(data[i], data[j])
+
         mean_in = sum_in / (cluster_size[predicted[i]] - 1)
 
         mean_out = np.zeros(k)
@@ -50,13 +49,13 @@ def silhouette(data, predicted):
                 if predicted[i] != predicted[j]:
                     mean_out[predicted[j]] += distance.euclidean(data[i], data[j])
 
+
+
+        min_mean_out = np.zeros(k)
         for l in range(k):
-            mean_out[l] = mean_out[l] / cluster_size[l]
+            min_mean_out[l] = mean_out[l]/cluster_size[l]
 
-        min_mean_out = np.min(mean_out)
-
-        s[i] = (mean_in - min_mean_out) / max(mean_in, min_mean_out)
-
+        s[i] = (np.min(min_mean_out) - mean_in) / max(mean_in, np.min(min_mean_out))
 
     assert s.shape == (n,)
     return s
