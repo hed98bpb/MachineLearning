@@ -127,13 +127,5 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
         phi[32][i] = emissions_from_32[i] / (np.sum(emissions_from_32) + len(emissions_from_32))
         phi[33][i] = emissions_from_33[i] / (np.sum(emissions_from_33) + len(emissions_from_33))
 
-    print(np.sum(pi))
-    print('erpog')
-    for i in A:
-        print(np.sum(i))
-    print('arijga')
-    for i in phi:
-        print(np.sum(i))
-
     return pi, A, phi
 
