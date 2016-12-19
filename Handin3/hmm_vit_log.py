@@ -70,8 +70,8 @@ def get_prediction(obs, pi, A, phi, X):
         elif z1[i] == 'C' and z2[i] == 'N':
             final_z += 'C'
 
-        # this will not happen that z1 = C and z2 = C?
+        #  z1 = C and z2 = C?
         else:
-            final_z += 'C'
+            final_z += 'R'
 
     return final_z
