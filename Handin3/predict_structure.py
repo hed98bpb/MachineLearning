@@ -60,7 +60,7 @@ print('Done training')
 unan_genomes = {}
 files = ['genome6', 'genome7', 'genome8', 'genome9', 'genome10']
 for filename in files:
-    unan_genomes.update(read_fasta_file(filename_g))
+    unan_genomes.update(read_fasta_file(('Data/' + filename + '.fa')))
 
 for gen in unan_genomes:
     print('Starting viterbi on: ' + gen)
