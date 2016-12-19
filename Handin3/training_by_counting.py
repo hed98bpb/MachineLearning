@@ -127,16 +127,5 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
         phi[32][i] = emissions_from_32[i] / np.sum(emissions_from_32)
         phi[33][i] = emissions_from_33[i] / np.sum(emissions_from_33)
 
-    print('A')
-    for row in A:
-        print(np.sum(row))
-
-    print('phi')
-    for row in phi:
-        print(np.sum(row))
-
-    print('pi')
-    print(np.sum(pi))
-
     return pi, A, phi
 
