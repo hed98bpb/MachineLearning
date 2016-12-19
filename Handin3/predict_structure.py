@@ -8,7 +8,7 @@ import time
 # Initializing the model:
 obs, pi, A, phi = get_model()
 
-# write_hmm_file(obs, pi, A, phi, 'init_hmm')
+write_hmm_file(obs, pi, A, phi, 'init_hmm')
 
 # Getting training data:
 genomes = {}
@@ -52,7 +52,7 @@ fold_genomes = {key: genomes[key] for key in ['genome1', 'genome2', 'genome3', '
 # training by counting:
 pi, A, phi = train_by_counting(obs, pi, A, phi, fold_annotations, fold_genomes)
 
-# write_hmm_file(obs, pi, A, phi, 'tbc_hmm')
+write_hmm_file(obs, pi, A, phi, 'tbc_hmm')
 
 print('Done training')
 

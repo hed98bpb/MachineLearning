@@ -3,8 +3,8 @@ import numpy as np
 def train_by_counting(obs, pi, A, phi, annotations, genomes):
 
     # Counting pi:
-    NR_seen = 1
-    C_seen = 1
+    NR_seen = 0
+    C_seen = 0
     for anno in annotations:
         if annotations[anno][0] == 'C':
             C_seen += 1
@@ -17,17 +17,17 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
 
 
     # Counters for transitions:
-    N_to_N = 1
-    N_to_1 = N_to_4 = N_to_7 = N_to_10 = N_to_13 = N_to_16 = N_to_19 = N_to_22 = N_to_25 = N_to_28 = 1
-    C_to_C = 1
-    C33_to_31 = C33_to_34 = C33_to_37 = C33_to_40 = 1
-    C_to_N = 1
+    N_to_N = 0
+    N_to_1 = N_to_4 = N_to_7 = N_to_10 = N_to_13 = N_to_16 = N_to_19 = N_to_22 = N_to_25 = N_to_28 = 0
+    C_to_C = 0
+    C33_to_31 = C33_to_34 = C33_to_37 = C33_to_40 = 0
+    C_to_N = 0
 
     # Counters for emissions
-    emissions_from_N = [1 for i in range(len(obs))]
-    emissions_from_31 = [1 for i in range(len(obs))]
-    emissions_from_32 = [1 for i in range(len(obs))]
-    emissions_from_33 = [1 for i in range(len(obs))]
+    emissions_from_N = [0 for i in range(len(obs))]
+    emissions_from_31 = [0 for i in range(len(obs))]
+    emissions_from_32 = [0 for i in range(len(obs))]
+    emissions_from_33 = [0 for i in range(len(obs))]
 
     # The actual counting:
     for anno in annotations:
@@ -126,6 +126,17 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
         phi[31][i] = emissions_from_31[i] / np.sum(emissions_from_31)
         phi[32][i] = emissions_from_32[i] / np.sum(emissions_from_32)
         phi[33][i] = emissions_from_33[i] / np.sum(emissions_from_33)
+
+    print('A')
+    for row in A:
+        print(np.sum(row))
+
+    print('phi')
+    for row in phi:
+        print(np.sum(row))
+
+    print('pi')
+    print(np.sum(pi))
 
     return pi, A, phi
 

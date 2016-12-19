@@ -56,7 +56,7 @@ def get_model():
     phi = [[0 for i in range(len(obs))] for i in range(nbf_states)]
 
     # Lists over states where we emit a specific letters in start- and end-codons
-    Alist = [1, 4, 7, 13, 9, 27, 35, 36, 38]
+    Alist = [1, 4, 7, 13, 9, 27, 35, 36, 38, 42]
     Clist = [16, 22, 6, 24]
     Glist = [3, 10, 12, 18, 19, 30, 39, 41]
     Tlist = [2, 5, 8, 11, 14, 15, 17, 20, 21, 23, 25, 26, 28, 29, 34, 37, 40]
