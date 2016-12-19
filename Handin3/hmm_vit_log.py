@@ -72,6 +72,6 @@ def get_prediction(obs, pi, A, phi, X):
 
         #  z1 = C and z2 = C?
         else:
-            final_z += 'R'
+            final_z += 'C'
 
     return final_z
