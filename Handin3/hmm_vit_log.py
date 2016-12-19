@@ -12,7 +12,7 @@ def run_viterbi(obs, pi, A, phi, X):
     """
     Finding Z* in log-space (viterbi decoding) Z* is the overall most likely explanation of X:
     """
-
+    print('Viterbi')
     omega = [[-np.inf for col in range(N)] for row in range(K)]
 
     # Base case omega[z_1]:
@@ -30,6 +30,7 @@ def run_viterbi(obs, pi, A, phi, X):
 
 
     # Backtracking - finding Z*:
+    print('backtracking')
     max_z_N_index = np.argmax([col[N - 1] for col in omega])
     # log P(X,Z) (loglikelihood): omega[max_z_N_index][N - 1]
 
@@ -38,7 +39,10 @@ def run_viterbi(obs, pi, A, phi, X):
     for n in reversed(range(N - 1)):
         column_n = [0 for col in range(K)]
         for k in range(K):
-            column_n[k] = math.log(phi[Z_star[len(Z_star)-1]][obs[X[n + 1]]]) + omega[k][n] + math.log(A[k][Z_star[len(Z_star)-1]])
+            phi_nb = phi[Z_star[len(Z_star)-1]][obs[X[n + 1]]]
+            A_nb = A[k][Z_star[len(Z_star)-1]]
+            if phi_nb != 0 and A_nb != 0:
+                column_n[k] = math.log(phi_nb) + omega[k][n] + math.log(A_nb)
 
         z_n_index = np.argmax(column_n)
         Z_star.insert(0, z_n_index)
