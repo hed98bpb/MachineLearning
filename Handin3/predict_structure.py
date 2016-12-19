@@ -47,8 +47,8 @@ for anno in annotations:
 annotations.update(reversed_annotations)
 genomes.update(reversed_genomes)
 
-fold_annotations = {key: annotations[key] for key in ['annotation1', 'annotation3', 'annotation4', 'annotation5', 'annotation6', 'annotation8', 'annotation9', 'annotation10']}
-fold_genomes = {key: genomes[key] for key in ['genome1', 'genome3', 'genome4', 'genome5', 'genome6', 'genome8', 'genome9', 'genome10']}
+fold_annotations = {key: annotations[key] for key in ['annotation1', 'annotation2', 'annotation3', 'annotation5', 'annotation6', 'annotation7', 'annotation8', 'annotation10']}
+fold_genomes = {key: genomes[key] for key in ['genome1', 'genome2', 'genome3', 'genome5', 'genome6', 'genome7', 'genome8', 'genome10']}
 # training by counting:
 pi, A, phi = train_by_counting(obs, pi, A, phi, fold_annotations, fold_genomes)
 
@@ -58,7 +58,7 @@ print('Done training')
 
 # Predict structure for the rest of the genomes in dataset:
 unan_genomes = {}
-filename_g = 'Data/genome2.fa'
+filename_g = 'Data/genome4.fa'
 unan_genomes.update(read_fasta_file(filename_g))
 
 for gen in unan_genomes:
