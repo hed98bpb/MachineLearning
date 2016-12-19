@@ -25,12 +25,10 @@ def run_viterbi(obs, pi, A, phi, X):
                     if A[j][k] != 0:
                         omega[k][n] = max(omega[k][n], math.log(phi[k][obs[X[n]]]) + omega[j][n-1]+ math.log(A[j][k]))
 
-    for row in omega:
-        print(row)
     # Backtracking - finding Z*:
     print('backtracking')
     max_z_N_index = np.argmax([col[N - 1] for col in omega])
-    print(max_z_N_index)
+
     # log P(X,Z) (loglikelihood): omega[max_z_N_index][N - 1]
 
     Z_star = [max_z_N_index]  # The last state in the string Z_star.
