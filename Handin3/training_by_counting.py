@@ -3,8 +3,8 @@ import numpy as np
 def train_by_counting(obs, pi, A, phi, annotations, genomes):
 
     # Counting pi:
-    NR_seen = 0
-    C_seen = 0
+    NR_seen = 1
+    C_seen = 1
     for anno in annotations:
         if annotations[anno][0] == 'C':
             C_seen += 1
@@ -12,22 +12,22 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
             NR_seen += 1
 
     # Calculating pi
-    pi[0] = NR_seen / len(annotations)
-    pi[1] = C_seen / len(annotations)
+    pi[0] = NR_seen / (len(annotations)+2)
+    pi[1] = C_seen / (len(annotations)+2)
 
 
     # Counters for transitions:
-    N_to_N = 0
-    N_to_1 = N_to_4 = N_to_7 = N_to_10 = N_to_13 = N_to_16 = N_to_19 = N_to_22 = N_to_25 = N_to_28 = 0
-    C_to_C = 0
-    C33_to_31 = C33_to_34 = C33_to_37 = C33_to_40 = 0
-    C_to_N = 0
+    N_to_N = 1
+    N_to_1 = N_to_4 = N_to_7 = N_to_10 = N_to_13 = N_to_16 = N_to_19 = N_to_22 = N_to_25 = N_to_28 = 1
+    C_to_C = 1
+    C33_to_31 = C33_to_34 = C33_to_37 = C33_to_40 = 1
+    C_to_N = 1
 
     # Counters for emissions
-    emissions_from_N = [0 for i in range(len(obs))]
-    emissions_from_31 = [0 for i in range(len(obs))]
-    emissions_from_32 = [0 for i in range(len(obs))]
-    emissions_from_33 = [0 for i in range(len(obs))]
+    emissions_from_N = [1 for i in range(len(obs))]
+    emissions_from_31 = [1 for i in range(len(obs))]
+    emissions_from_32 = [1 for i in range(len(obs))]
+    emissions_from_33 = [1 for i in range(len(obs))]
 
     # The actual counting:
     for anno in annotations:
@@ -97,7 +97,7 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
             previous_seen = annotations[anno][i]
 
     # Calculating A:
-    all_N_to = N_to_N + N_to_1 + N_to_4 + N_to_7 + N_to_10 + N_to_13 + N_to_16 + N_to_19 + N_to_22 + N_to_25 + N_to_28
+    all_N_to = N_to_N + N_to_1 + N_to_4 + N_to_7 + N_to_10 + N_to_13 + N_to_16 + N_to_19 + N_to_22 + N_to_25 + N_to_28 + 11 # 11 = de falske tællinger.
     assert(all_N_to != 0)
     A[0][0] = N_to_N / all_N_to
     A[0][1] = N_to_1 / all_N_to
@@ -111,7 +111,7 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
     A[0][25] = N_to_25 / all_N_to
     A[0][28] = N_to_28 / all_N_to
 
-    all_C_to = C33_to_34 + C33_to_37 + C33_to_40 + C33_to_31
+    all_C_to = C33_to_34 + C33_to_37 + C33_to_40 + C33_to_31 + 4
     assert (all_C_to != 0)
 
     A[33][31] = C33_to_31 / all_C_to
@@ -122,10 +122,18 @@ def train_by_counting(obs, pi, A, phi, annotations, genomes):
 
     # Calculating phi[state][observable]:
     for i in range(len(obs)):
-        phi[0][i] = emissions_from_N[i] / np.sum(emissions_from_N)
-        phi[31][i] = emissions_from_31[i] / np.sum(emissions_from_31)
-        phi[32][i] = emissions_from_32[i] / np.sum(emissions_from_32)
-        phi[33][i] = emissions_from_33[i] / np.sum(emissions_from_33)
+        phi[0][i] = emissions_from_N[i] / (np.sum(emissions_from_N) + len(emissions_from_N))
+        phi[31][i] = emissions_from_31[i] / (np.sum(emissions_from_31) + len(emissions_from_31))
+        phi[32][i] = emissions_from_32[i] / (np.sum(emissions_from_32) + len(emissions_from_32))
+        phi[33][i] = emissions_from_33[i] / (np.sum(emissions_from_33) + len(emissions_from_33))
+
+    print(np.sum(pi))
+    print('erpog')
+    for i in A:
+        print(np.sum(i))
+    print('arijga')
+    for i in phi:
+        print(np.sum(i))
 
     return pi, A, phi
 
