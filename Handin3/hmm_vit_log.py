@@ -36,19 +36,20 @@ def run_viterbi(obs, pi, A, phi, X):
     for n in reversed(range(N - 1)):
         column_n = [-np.inf for col in range(K)]
         for k in range(K):
-            phi_nb = phi[Z_star[len(Z_star)-1]][obs[X[n + 1]]]
-            A_nb = A[k][Z_star[len(Z_star)-1]]
-            if omega[k][n] != -np.inf and phi_nb != 0 and A_nb != 0:
-                column_n[k] = math.log(phi_nb) + omega[k][n] + math.log(A_nb)
+            if omega[k][n] != -np.inf:
+                phi_nb = phi[Z_star[len(Z_star)-1]][obs[X[n + 1]]]
+                A_nb = A[k][Z_star[len(Z_star)-1]]
+                if phi_nb != 0 and A_nb != 0:
+                    column_n[k] = math.log(phi_nb) + omega[k][n] + math.log(A_nb)
         z_n_index = np.argmax(column_n)
-        Z_star.insert(0, z_n_index)
+        Z_star.append(z_n_index)
 
     translated_z = ''
-    for i in Z_star:
+    for i in reversed(Z_star):
         if i == 0:
-            translated_z = translated_z + 'N'
+            translated_z += 'N'
         else:
-            translated_z = translated_z + 'C'
+            translated_z += 'C'
 
     return translated_z
 

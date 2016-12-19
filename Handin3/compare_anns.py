@@ -133,5 +133,3 @@ print_all(true_ann, pred_ann)
 
 
 
-
-
